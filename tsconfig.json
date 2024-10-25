@@ -52,6 +52,7 @@
     "./dist/types/**/*.ts",
     "./next-env.d.ts",
     "src",
+    "./global.d.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": [
