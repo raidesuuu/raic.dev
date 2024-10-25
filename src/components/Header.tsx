@@ -1,9 +1,10 @@
+"use client"
+
 // Header.tsx
 import React, { useEffect, useState } from 'react';
 import { CiText } from 'react-icons/ci';
 import { FaDiscord, FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
 import DropdownItem from './DropdownItem';
 
 const Header: React.FC = () => {
@@ -34,16 +35,16 @@ const Header: React.FC = () => {
         //     <nav>
         //         <ul className="flex space-x-6 text-gray-300">
         //             <li>
-        //                 <Link to="/products" className="hover:text-white">製品</Link>
+        //                 <a href="/products" className="hover:text-white">製品</a>
         //             </li>
         //             <li>
-        //                 <Link to="/socials" className="hover:text-white">SNS</Link>
+        //                 <a href="/socials" className="hover:text-white">SNS</a>
         //             </li>
         //             <li>
-        //                 <Link to="/contact" className="hover:text-white">お問い合わせ</Link>
+        //                 <a href="/contact" className="hover:text-white">お問い合わせ</a>
         //             </li>
         //             <li>
-        //                 <Link to="/privacy" className="hover:text-white">プライバシーポリシー</Link>
+        //                 <a href="/privacy" className="hover:text-white">プライバシーポリシー</a>
         //             </li>
         //             <li>
         //                 <a href="https://github.com/raidesuuu" className="flex items-center hover:text-white">
@@ -57,10 +58,10 @@ const Header: React.FC = () => {
         <header className="bg-gray-900 text-white flex justify-between items-center px-6 py-4">
             {/* Left Side: Logo */}
             <div className="flex items-center ml-48 space-x-2">
-                <Link to="/">
+                <a href="/">
                     <span className="font-bold text-xl">雷のサイト</span>
                     <span className="bg-yellow-100 text-yellow-800 ml-3 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Beta</span>
-                </Link>
+                </a>
             </div>
 
             {/* Center: Search and Navigation */}
@@ -77,9 +78,9 @@ const Header: React.FC = () => {
 
                 {/* Navigation Links */}
                 <nav className="flex space-x-4">
-                    <Link to="/products" className="hover:text-blue-200">製品</Link>
-                    <Link to="/socials" className="hover:text-blue-200">SNS</Link>
-                    <Link to="/contact" className="hover:text-blue-200">お問い合わせ</Link>
+                    <a href="/products" className="hover:text-blue-200">製品</a>
+                    <a href="/socials" className="hover:text-blue-200">SNS</a>
+                    <a href="/contact" className="hover:text-blue-200">お問い合わせ</a>
                     <div className="relative">
                         <button onClick={toggleDropdown} className="hover:text-blue-200">
                             その他
