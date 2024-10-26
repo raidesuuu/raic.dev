@@ -60,7 +60,7 @@ const Header: React.FC = () => {
             <div className="flex items-center ml-48 space-x-2">
                 <a href="/">
                     <span className="font-bold text-xl">雷のサイト</span>
-                    <span className="bg-yellow-100 text-yellow-800 ml-3 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Beta</span>
+                    <span className="ml-3 text-xs font-medium me-2 px-2.5 py-0.5 rounded bg-yellow-900 text-yellow-300">Beta</span>
                 </a>
             </div>
 

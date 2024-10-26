@@ -20,7 +20,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-between text-center text-white">
       <main className="flex-grow flex h-screen flex-col items-center justify-center w-full">
-        <h1 className="text-6xl font-extrabold mb-4 bold-h1">雷のサイト</h1>
+        <h1 className="text-6xl font-bold mb-4 bold-h1">雷のサイト</h1>
         <p className="text-xl mb-8 max-w-xl">
           Rai ChatとかVistaUpdaterとかDiscordのbot作ったりゲームしてる人
           <small>(React noob)</small>
