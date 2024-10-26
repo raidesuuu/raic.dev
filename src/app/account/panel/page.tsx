@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { auth } from "@util//firebaseConfig";
+import { auth } from "@util/firebaseConfig";
 import { EmailAuthProvider, getMultiFactorResolver, TotpMultiFactorGenerator, reauthenticateWithCredential, verifyBeforeUpdateEmail, updatePassword, onAuthStateChanged, multiFactor, TotpSecret } from "firebase/auth";
 import PanelSidebar from "@/components/PanelSidebar";
 import qrcode from "qrcode";

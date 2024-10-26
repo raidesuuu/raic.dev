@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useState } from 'react';
-import { auth } from "@util//firebaseConfig"
+import { auth } from "@util/firebaseConfig"
 import { signInWithEmailAndPassword, getMultiFactorResolver, TotpMultiFactorGenerator } from 'firebase/auth';
 
 const Login: React.FC = () => {

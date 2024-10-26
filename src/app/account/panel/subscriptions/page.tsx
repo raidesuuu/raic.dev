@@ -3,8 +3,8 @@
 import React, { useEffect, useRef } from "react";
 import PanelSidebar from "@/components/PanelSidebar";
 import { getDoc, doc } from "firebase/firestore";
-import { auth, firestore, SubscriptionDataInterface } from "@util//firebaseConfig";
-import { getPlan } from "@util//rai";
+import { auth, firestore, SubscriptionDataInterface } from "@util/firebaseConfig";
+import { getPlan } from "@util/rai";
 
 const Login: React.FC = () => {
   const subscriptionStateRef = useRef<HTMLDivElement | null>(null);
