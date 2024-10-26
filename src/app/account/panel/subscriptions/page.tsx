@@ -26,7 +26,7 @@ const Login: React.FC = () => {
     if (subscriptionBodyRef.current && subscriptionHeaderRef.current && subscriptionStateRef.current && checkoutCreateForm.current && authTokenRef.current) {
       auth.onAuthStateChanged(async (user) => {
         if (user === null) {
-          window.location.pathname = "/account/login/";
+          window.location.pathname = "/account/login";
           return;
         }
 

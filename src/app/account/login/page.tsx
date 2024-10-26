@@ -14,7 +14,7 @@ const Login: React.FC = () => {
     const [accountPassword, setPassword] = useState("")
 
     auth.onAuthStateChanged((user) => {
-        if (user) window.location.pathname = "/account/panel/";
+        if (user) window.location.pathname = "/account/panel";
     })
     const request2FaCode = () => {
         return new Promise<string>((resolve) => {
@@ -40,7 +40,7 @@ const Login: React.FC = () => {
         const notice = noticeRef.current;
         signInWithEmailAndPassword(auth, accountEmail, accountPassword)
             .then(() => {
-                window.location.pathname = "/account/panel/"
+                window.location.pathname = "/account/panel"
             })
             .catch(async (error) => {
                 const errorCode = error.code
@@ -62,7 +62,7 @@ const Login: React.FC = () => {
                         const multiFactorAssertion = TotpMultiFactorGenerator.assertionForSignIn(mfaResolver.hints[0].uid, tfaCode)
                         try {
                             await mfaResolver.resolveSignIn(multiFactorAssertion).then(() => {
-                                window.location.pathname = "/account/panel/"
+                                window.location.pathname = "/account/panel"
                             })
                         } catch (e) {
                             console.log(e)

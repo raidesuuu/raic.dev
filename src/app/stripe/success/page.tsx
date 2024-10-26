@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 const StripeSuccess: React.FC = () => {
   useEffect(() => {
     setTimeout(() => {
-      window.location.pathname = "/account/panel/subscriptions/"
+      window.location.pathname = "/account/panel/subscriptions"
     }, 10000)
   }, []);
 

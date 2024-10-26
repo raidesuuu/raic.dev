@@ -32,7 +32,7 @@ const Login: React.FC = () => {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        window.location.pathname = "/account/login/";
+        window.location.pathname = "/account/login";
         return;
       }
       if (multiFactor(user).enrolledFactors.length > 0 && noticeTFARef.current) {
