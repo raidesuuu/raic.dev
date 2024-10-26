@@ -44,6 +44,9 @@
       ],
       "@assets/*": [
         "./src/assets/*"
+      ],
+      "@util/*": [
+        "./src/util/*"
       ]
     },
     "resolveJsonModule": true

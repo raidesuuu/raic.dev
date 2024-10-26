@@ -1,7 +1,8 @@
+/* eslint @typescript-eslint/no-explicit-any: off */
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { auth } from "@/util/firebaseConfig";
+import { auth } from "@util//firebaseConfig";
 import { EmailAuthProvider, getMultiFactorResolver, TotpMultiFactorGenerator, reauthenticateWithCredential, verifyBeforeUpdateEmail, updatePassword, onAuthStateChanged, multiFactor, TotpSecret } from "firebase/auth";
 import PanelSidebar from "@/components/PanelSidebar";
 import qrcode from "qrcode";
@@ -106,6 +107,7 @@ const Login: React.FC = () => {
                   });
               });
             } catch (e) {
+              console.log(e);
               notice.textContent = "無効な認証コードです。もう一度お試しください。";
             }
           }
@@ -166,6 +168,7 @@ const Login: React.FC = () => {
                 notice.textContent = "パスワードが変更されました";
               });
             } catch (e) {
+                console.log(e)
               notice.textContent = "無効な認証コードです。もう一度お試しください。";
             }
           }
@@ -186,9 +189,10 @@ const Login: React.FC = () => {
       notice.textContent = "パスワードを入力してください";
       return;
     }
-  
+
     try {
       await reauthenticateWithCredential(auth.currentUser!, EmailAuthProvider.credential(auth.currentUser!.email || "", accountPassword));
+
     } catch (error: any) {
       if (error.code === "auth/multi-factor-auth-required") {
         // ここで多要素認証を要求する処理を追加
@@ -197,15 +201,17 @@ const Login: React.FC = () => {
           // TOTPによる認証を処理
           const tfaCode = await request2FaCode(); // ユーザーにTOTPコードを入力してもらう
           if (!tfaCode) return;
-  
+
           const multiFactorAssertion = TotpMultiFactorGenerator.assertionForSignIn(multiFactor(auth.currentUser!).enrolledFactors[0].uid, tfaCode);
           try {
             await mfaResolver.resolveSignIn(multiFactorAssertion);
-            await multiFactor(auth.currentUser!).unenroll(multiFactor(auth.currentUser!).enrolledFactors[0].uid)
-            .then(() => {
-              notice.textContent = "2段階認証が無効になりました！";
-            });
-          } catch (signInError) {
+            await multiFactor(auth.currentUser!)
+              .unenroll(multiFactor(auth.currentUser!).enrolledFactors[0].uid)
+              .then(() => {
+                notice.textContent = "2段階認証が無効になりました！";
+              });
+          } catch (e) {
+            console.log(e)
             notice.textContent = "無効な認証コードです。もう一度お試しください。";
           }
         }
@@ -214,8 +220,6 @@ const Login: React.FC = () => {
       }
     }
   };
-  
-  
 
   const tfaCodeClicked = async () => {
     if (!noticeTFARef.current) return;

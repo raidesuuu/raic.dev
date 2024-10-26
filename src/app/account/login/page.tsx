@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react';
-import { auth } from "@/util/firebaseConfig"
+import React, { useRef, useState } from 'react';
+import { auth } from "@util//firebaseConfig"
 import { signInWithEmailAndPassword, getMultiFactorResolver, TotpMultiFactorGenerator } from 'firebase/auth';
 
 const Login: React.FC = () => {
@@ -65,6 +65,7 @@ const Login: React.FC = () => {
                                 window.location.pathname = "/account/panel/"
                             })
                         } catch (e) {
+                            console.log(e)
                             notice.textContent = '無効な認証コードです。もう一度お試しください。'
                         }
                     }
