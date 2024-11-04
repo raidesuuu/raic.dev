@@ -1,32 +1,26 @@
-import '@/styles.scss'
-import Footer from '@components/Footer'
-import Header from '@components/Header'
-import type { Metadata } from 'next'
+"use client";
 
-export const metadata: Metadata = {
-    title: 'Rai Website',
-    description: 'Rai website is made by :heart:',
-}
+import LoadingScreen from "@/components/Loading";
+import "@/styles.scss";
+import { Suspense } from "react";
+import Header from "@components/Header";
+import Footer from "@components/Footer";
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
-    return (
-        <html lang="en">
-            <head>
-                <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-                <title>Vite</title>
-                <meta name="description" content="My App is a..." />
-            </head>
-            <body>
-                <div id="root">
-                    <Header />
-                    {children}
-                    <Footer />
-                </div>
-            </body>
-        </html>
-    )
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <title>雷のサイト</title>
+        <meta name="description" content="雷のサイトへようこそ！" />
+      </head>
+      <body>
+        <div id="root" className="flex flex-col min-h-screen bg-gray-950 text-white">
+          <Header />
+          <Suspense fallback={<LoadingScreen />}>{children}</Suspense>
+          <Footer />
+        </div>
+      </body>
+    </html>
+  );
 }

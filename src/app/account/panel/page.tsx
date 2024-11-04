@@ -1,11 +1,12 @@
 /* eslint @typescript-eslint/no-explicit-any: off */
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { auth } from "@util/firebaseConfig";
 import { EmailAuthProvider, getMultiFactorResolver, TotpMultiFactorGenerator, reauthenticateWithCredential, verifyBeforeUpdateEmail, updatePassword, onAuthStateChanged, multiFactor, TotpSecret } from "firebase/auth";
 import PanelSidebar from "@/components/PanelSidebar";
 import qrcode from "qrcode";
+import LoadingScreen from "@/components/Loading";
 
 const Login: React.FC = () => {
   const welcomeRef = useRef<HTMLHeadingElement | null>(null);
@@ -168,7 +169,7 @@ const Login: React.FC = () => {
                 notice.textContent = "パスワードが変更されました";
               });
             } catch (e) {
-                console.log(e)
+              console.log(e);
               notice.textContent = "無効な認証コードです。もう一度お試しください。";
             }
           }
@@ -192,7 +193,6 @@ const Login: React.FC = () => {
 
     try {
       await reauthenticateWithCredential(auth.currentUser!, EmailAuthProvider.credential(auth.currentUser!.email || "", accountPassword));
-
     } catch (error: any) {
       if (error.code === "auth/multi-factor-auth-required") {
         // ここで多要素認証を要求する処理を追加
@@ -211,7 +211,7 @@ const Login: React.FC = () => {
                 notice.textContent = "2段階認証が無効になりました！";
               });
           } catch (e) {
-            console.log(e)
+            console.log(e);
             notice.textContent = "無効な認証コードです。もう一度お試しください。";
           }
         }
@@ -305,108 +305,85 @@ const Login: React.FC = () => {
 
   return (
     <div className="bg-gray-950 min-h-screen text-white">
-      <h1 ref={loadingRef} className="text-6xl font-bold mb-4">
-        Loading...
-      </h1>
-      <div ref={mainRef} className="min-h-screen w-full hidden bg-gray-950 text-white p-8">
-        <PanelSidebar />
-        <div className="flex-grow w-full p-8 h-screen ml-8 bg-gray-800">
-          <h1 className="text-6xl font-bold mb-4" ref={welcomeRef}>
-            こんにちは！
-          </h1>
-          <p className="text-xl mb-8 max-w-5xl">
-            このパネルでは、メールアドレスやパスワードを管理したり、サブスクリプションの管理などができます。
-            <br></br>
-            <small>ちなみにパスワードボックスは同期されるよ（笑）</small>
-            <button className="button bg-blue-300" onClick={() => auth.signOut()}>
-              ログアウト
-            </button>
-          </p>
-
-          <div className="flex flex-row">
-            <div className="mr-10 w-2/4">
-              <h2 className="text-3xl font-bold mb-4">メールアドレスを変更</h2>
-              <input type="text" placeholder="新しいメールアドレス" onChange={(e) => setEmail(e.target.value)} value={accountEmail} className="bg-gray-800 text-white rounded-full mb-3 border-4 border-gray-700 py-1 pl-3 pr-3" />
+      <Suspense fallback={<LoadingScreen />}>
+        <div ref={mainRef} className="min-h-screen w-full flex flex-col lg:flex-row bg-gray-950 text-white p-4 lg:p-8">
+          <PanelSidebar />
+          {/* Main Content */}
+          <div className="flex-grow w-full p-4 lg:p-8 h-full lg:h-screen bg-gray-800 ml-0 lg:ml-8">
+            <h1 className="text-3xl lg:text-6xl font-bold mb-4">こんにちは！</h1>
+            <p className="text-lg lg:text-xl mb-8 max-w-5xl">
+              このパネルでは、メールアドレスやパスワードを管理したり、サブスクリプションの管理などができます。
               <br />
-
-              <input type="password" placeholder="パスワード" onChange={(e) => setPassword(e.target.value)} value={accountPassword} className="bg-gray-800 text-white rounded-full border-4 border-gray-700 mb-3 py-1 pl-3 pr-3" />
-              <br />
-
-              <p className="text-base mb-8" ref={noticeRef}>
-                注: 二段階認証を設定している場合はアプリの認証コードが求められます
-              </p>
-
-              <button type="button" className="button primary" onClick={emailChangeClicked}>
-                変更する
+              <small>ちなみにパスワードボックスは同期されるよ（笑）</small>
+              <button className="button bg-blue-300 mt-4" onClick={() => auth.signOut()}>
+                ログアウト
               </button>
+            </p>
+
+            {/* Flex Row for Email and Password Section */}
+            <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-10">
+              {/* Email Section */}
+              <div className="lg:w-2/4">
+                <h2 className="text-3xl font-bold mb-4">メールアドレスを変更</h2>
+                <input type="text" placeholder="新しいメールアドレス" onChange={(e) => setEmail(e.target.value)} value={accountEmail} className="bg-gray-800 text-white rounded-full mb-3 border-4 border-gray-700 py-1 px-3 w-full" />
+                <input type="password" placeholder="パスワード" onChange={(e) => setPassword(e.target.value)} value={accountPassword} className="bg-gray-800 text-white rounded-full border-4 border-gray-700 mb-3 py-1 px-3 w-full" />
+                <p className="text-base mb-8" ref={noticeRef}>
+                  注: 二段階認証を設定している場合はアプリの認証コードが求められます
+                </p>
+                <button type="button" className="button primary" onClick={emailChangeClicked}>
+                  変更する
+                </button>
+              </div>
+
+              {/* Password Section */}
+              <div className="lg:w-2/4">
+                <h2 className="text-3xl font-bold mb-4">パスワードを変更</h2>
+                <input type="password" placeholder="現在のパスワード" onChange={(e) => setPassword(e.target.value)} value={accountPassword} className="bg-gray-800 text-white rounded-full border-4 border-gray-700 mb-3 py-1 px-3 w-full" />
+                <input type="password" placeholder="新しいパスワード" onChange={(e) => setNewPassword(e.target.value)} value={accountNewPassword} className="bg-gray-800 text-white rounded-full border-4 border-gray-700 mb-3 py-1 px-3 w-full" />
+                <p className="text-base mb-8" ref={noticePasswordRef}>
+                  注: 二段階認証を設定している場合はアプリの認証コードが求められます
+                </p>
+                <button type="button" className="button primary mb-5" onClick={passwordChangeClicked}>
+                  変更する
+                </button>
+              </div>
             </div>
 
-            <div className="w-2/4">
-              <h2 className="text-3xl font-bold mb-4">パスワードを変更</h2>
-              <input type="password" placeholder="現在のパスワード" onChange={(e) => setPassword(e.target.value)} value={accountPassword} className="bg-gray-800 text-white rounded-full border-4 border-gray-700 mb-3 py-1 pl-3 pr-3" />
-              <br />
-              <input type="password" placeholder="新しいパスワード" onChange={(e) => setNewPassword(e.target.value)} value={accountNewPassword} className="bg-gray-800 text-white rounded-full border-4 border-gray-700 mb-3 py-1 pl-3 pr-3" />
-              <br />
-
-              <p className="text-base mb-8" ref={noticePasswordRef}>
-                注: 二段階認証を設定している場合はアプリの認証コードが求められます
-              </p>
-
-              <button type="button" className="button primary mb-5" onClick={passwordChangeClicked}>
-                変更する
-              </button>
-            </div>
-          </div>
-          <div className="w-2/4">
-            <h2 className="text-3xl font-bold mb-4">二段階認証の設定</h2>
-            <input type="password" placeholder="パスワード" onChange={(e) => setPassword(e.target.value)} value={accountPassword} className="bg-gray-800 text-white rounded-full border-4 border-gray-700 mb-3 py-1 pl-3 pr-3" />
-            <br />
-
-            <div ref={tfaContainerRef} className="hidden">
-              <canvas ref={qrCodeCanvasRef}></canvas>
-              <p className="text-base mb-2" ref={tfaSecretRef}></p>
-
-              <input type="password" placeholder="二段階認証コード" onChange={(e) => setTwoFaCode(e.target.value)} value={twoFaCode} className="bg-gray-800 text-white rounded-full border-4 border-gray-700 py-1 pl-3 pr-3" />
-            </div>
-
-            <p className="text-base mb-3" ref={noticeTFARef}></p>
-
-            {/* <p className="text-base mb-8" ref={noticePasswordRef}>
-                注: 二段階認証を設定している場合はアプリの認証コードが求められます
-              </p> */}
-
-            <button type="button" className="button primary mb-5" ref={tfaActivateRef} onClick={tfaCodeClicked}>
-              続ける
-            </button>
-          </div>
-        </div>
-      </div>
-      {isDialogOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-gray-900 bg-opacity-75 absolute inset-0"></div>
-          <div className="bg-gray-900 text-white rounded-lg shadow-lg p-6 z-10 w-96">
-            <h2 className="text-xl font-bold mb-4">二段階認証が必要です</h2>
-            <input
-              type="text"
-              value={twoFaCode}
-              onChange={(e) => setTwoFaCode(e.target.value)} // 入力のたびに状態を更新
-              placeholder="認証アプリのコード"
-              className="border border-gray-300 bg-gray-700 p-2 rounded w-full mb-4"
-            />
-            <div className="flex justify-end">
-              <button onClick={closeDialog} className="button secondary">
-                キャンセル
-              </button>
-              <button
-                onClick={closeDialog} // ここでコードを確定して閉じる
-                className="button primary"
-              >
-                続行
+            {/* Two-Factor Authentication Section */}
+            <div className="lg:w-2/4 mt-8">
+              <h2 className="text-3xl font-bold mb-4">二段階認証の設定</h2>
+              <input type="password" placeholder="パスワード" onChange={(e) => setPassword(e.target.value)} value={accountPassword} className="bg-gray-800 text-white rounded-full border-4 border-gray-700 mb-3 py-1 px-3 w-full" />
+              <div ref={tfaContainerRef} className="hidden">
+                <canvas ref={qrCodeCanvasRef}></canvas>
+                <p className="text-base mb-2" ref={tfaSecretRef}></p>
+                <input type="password" placeholder="二段階認証コード" onChange={(e) => setTwoFaCode(e.target.value)} value={twoFaCode} className="bg-gray-800 text-white rounded-full border-4 border-gray-700 py-1 px-3 w-full" />
+              </div>
+              <p className="text-base mb-3" ref={noticeTFARef}></p>
+              <button type="button" className="button primary mb-5" ref={tfaActivateRef} onClick={tfaCodeClicked}>
+                続ける
               </button>
             </div>
           </div>
         </div>
-      )}
+
+        {isDialogOpen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-gray-900 bg-opacity-75 absolute inset-0"></div>
+            <div className="bg-gray-900 text-white rounded-lg shadow-lg p-6 z-10 w-11/12 sm:w-96">
+              <h2 className="text-xl font-bold mb-4">二段階認証が必要です</h2>
+              <input type="text" value={twoFaCode} onChange={(e) => setTwoFaCode(e.target.value)} placeholder="認証アプリのコード" className="border border-gray-300 bg-gray-700 p-2 rounded w-full mb-4" />
+              <div className="flex justify-end space-x-4">
+                <button onClick={closeDialog} className="button secondary">
+                  キャンセル
+                </button>
+                <button onClick={closeDialog} className="button primary">
+                  続行
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </Suspense>
     </div>
   );
 };

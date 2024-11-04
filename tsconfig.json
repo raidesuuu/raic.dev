@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
@@ -29,36 +25,17 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@pages/*": [
-        "./src/pages/*"
-      ],
-      "@assets/*": [
-        "./src/assets/*"
-      ],
-      "@util/*": [
-        "./src/util/*"
-      ]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@util/*": ["./src/util/*"]
     },
     "resolveJsonModule": true
   },
-  "include": [
-    "./dist/types/**/*.ts",
-    "./next-env.d.ts",
-    "src",
-    "./global.d.ts",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "./node_modules"
-  ]
+  "include": ["./dist/types/**/*.ts", "./next-env.d.ts", "src", "./global.d.ts", ".next/types/**/*.ts"],
+  "exclude": ["./node_modules"]
 }

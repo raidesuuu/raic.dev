@@ -82,71 +82,67 @@ const Login: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-950 text-white p-8">
-            <div className="flex items-center justify-center h-screen">
-                <div className="flex text-center pb-3 pt-3 pr-3 pl-3 bg-gray-800">
-                    <div className="bg-gradient-to-r from-purple-300 to-blue-800 w-96 mr-3">
-                    </div>
-                    <div className="pt-5 pr-5 pl-5 pb-5">
-                        <h1 className="text-6xl font-bold mb-4">ログイン</h1>
-                        <p className="text-xl mb-8 max-w-xl">
-                            雷のアカウントにサインインします。
-                        </p>
+<div className="min-h-screen bg-gray-950 text-white p-4 sm:p-8">
+    <div className="flex items-center justify-center min-h-screen">
+        <div className="flex flex-col sm:flex-row text-center bg-gray-800 rounded-lg">
+            <div className="hidden sm:block bg-gradient-to-r from-purple-300 to-blue-800 w-full sm:w-96 sm:mr-3 rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none">
+                {/* Add any image or content if necessary */}
+            </div>
+            <div className="p-5 sm:pt-5 sm:pr-5 sm:pl-5 sm:pb-5">
+                <h1 className="text-3xl sm:text-6xl font-bold mb-4">ログイン</h1>
+                <p className="text-lg sm:text-xl mb-8 max-w-xl">
+                    雷のアカウントにサインインします。
+                </p>
 
-                        <input
-                            type="text"
-                            placeholder="あなたのメールアドレス"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={accountEmail}
-                            className="bg-gray-800 text-white rounded-full mb-3 border-4 border-gray-700 py-1 pl-3 pr-3"
-                        /><br />
+                <input
+                    type="text"
+                    placeholder="あなたのメールアドレス"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={accountEmail}
+                    className="bg-gray-800 text-white rounded-full mb-3 border-4 border-gray-700 py-1 px-3 w-full"
+                /><br />
 
-                        <input
-                            type="password"
-                            placeholder="パスワード"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={accountPassword}
-                            className="bg-gray-800 text-white rounded-full border-4 border-gray-700 mb-3 py-1 pl-3 pr-3"
-                        /><br />
+                <input
+                    type="password"
+                    placeholder="パスワード"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={accountPassword}
+                    className="bg-gray-800 text-white rounded-full border-4 border-gray-700 mb-3 py-1 px-3 w-full"
+                /><br />
 
-                        <p className="text-base mb-8" ref={noticeRef}>
-                        </p>
+                <p className="text-base mb-8" ref={noticeRef}></p>
 
-                        <button type="button" className="button primary" onClick={loginClicked}>ログイン</button>
-                    </div>
+                <button type="button" className="button primary w-full sm:w-auto" onClick={loginClicked}>
+                    ログイン
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {isDialogOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-gray-800 bg-opacity-50 absolute inset-0"></div>
+            <div className="bg-gray-800 text-white rounded-lg shadow-lg p-6 z-10 w-11/12 sm:w-96">
+                <h2 className="text-lg sm:text-xl font-bold mb-4">二段階認証が必要です</h2>
+                <input
+                    type="text"
+                    value={twoFaCode}
+                    onChange={(e) => setTwoFaCode(e.target.value)}
+                    placeholder="認証アプリのコード"
+                    className="border border-gray-300 bg-gray-700 p-2 rounded w-full mb-4"
+                />
+                <div className="flex justify-end space-x-4">
+                    <button onClick={closeDialog} className="button secondary">
+                        キャンセル
+                    </button>
+                    <button onClick={closeDialog} className="button primary">
+                        続行
+                    </button>
                 </div>
             </div>
-
-            {isDialogOpen && (
-                <div className="fixed inset-0 flex items-center justify-center z-50">
-                    <div className="bg-gray-800 bg-opacity-50 absolute inset-0"></div>
-                    <div className="bg-gray-800 text-white rounded-lg shadow-lg p-6 z-10 w-96">
-                        <h2 className="text-xl font-bold mb-4">二段階認証が必要です</h2>
-                        <input
-                            type="text"
-                            value={twoFaCode}
-                            onChange={(e) => setTwoFaCode(e.target.value)} // 入力のたびに状態を更新
-                            placeholder="認証アプリのコード"
-                            className="border border-gray-300 bg-gray-700 p-2 rounded w-full mb-4"
-                        />
-                        <div className="flex justify-end">
-                            <button
-                                onClick={closeDialog}
-                                className="button secondary"
-                            >
-                                キャンセル
-                            </button>
-                            <button
-                                onClick={closeDialog} // ここでコードを確定して閉じる
-                                className="button primary"
-                            >
-                                続行
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
+    )}
+</div>
     );
 };
 

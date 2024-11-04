@@ -1,17 +1,17 @@
-import React from 'react';
-import { FaSpotify, FaGithub, FaYoutube, FaTwitch, FaInstagram, FaSteam } from 'react-icons/fa';
-import { FaBluesky, FaXTwitter } from 'react-icons/fa6';
-import { SiKick, SiOsu, SiNamemc } from 'react-icons/si';
+import React from "react";
+import { FaSpotify, FaGithub, FaYoutube, FaTwitch, FaInstagram, FaSteam } from "react-icons/fa";
+import { FaBluesky, FaXTwitter } from "react-icons/fa6";
+import { SiKick, SiOsu, SiNamemc } from "react-icons/si";
 
 const Socials: React.FC = () => {
   return (
     <div className="p-8">
-      <h1 className='text-5xl font-bold mb-5 bold-h1'>SNS</h1>
+      <h1 className="text-5xl font-bold mb-5 bold-h1">SNS</h1>
 
-      <p className='text-xl font-bold mb-5'>基本</p>
+      <p className="text-xl font-bold mb-5">基本</p>
 
       <div className="flex flex-wrap space-x-4 mb-10">
-        <a href="https://bsky.app/profile/raic.tech" className="button newtab secondary flex items-center space-x-2">
+        <a href="https://bsky.app/profile/raic.dev" className="button newtab secondary flex items-center space-x-2">
           <FaBluesky /> <span>Bluesky</span>
         </a>
 
@@ -24,7 +24,7 @@ const Socials: React.FC = () => {
         </a>
       </div>
 
-      <p className='text-xl font-bold mb-5'>メディア</p>
+      <p className="text-xl font-bold mb-5">メディア</p>
 
       <div className="flex flex-wrap space-x-4 mb-10">
         <a href="https://www.youtube.com/channel/UC4c5qLRRG3HCTmzxH69XBtw" className="button newtab secondary flex items-center space-x-2">
@@ -44,7 +44,7 @@ const Socials: React.FC = () => {
         </a>
       </div>
 
-      <p className='text-xl font-bold mb-5'>X (Twitter)</p>
+      <p className="text-xl font-bold mb-5">X (Twitter)</p>
 
       <div className="flex flex-wrap space-x-4 mb-10">
         <a href="https://x.com/raic_dev" className="button newtab secondary flex items-center space-x-2">
@@ -64,7 +64,7 @@ const Socials: React.FC = () => {
         </a>
       </div>
 
-      <p className='text-xl font-bold mb-5'>ゲーム</p>
+      <p className="text-xl font-bold mb-5">ゲーム</p>
 
       <div className="flex flex-wrap space-x-4 mb-10">
         <a href="https://osu.ppy.sh/users/34918440" className="button newtab secondary flex items-center space-x-2">
