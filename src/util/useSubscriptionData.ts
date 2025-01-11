@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { auth, firestore, SubscriptionDataInterface } from "@/util/firebaseConfig";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, doc, collection } from "firebase/firestore";
 
 export function useSubscriptionData() {
   const [subscriptionData, setSubscriptionData] = useState<SubscriptionDataInterface | null>(null);
@@ -14,7 +14,8 @@ export function useSubscriptionData() {
           const token = await user.getIdToken();
           setAuthToken(token);
 
-          const query = await getDoc(doc(firestore, "subscription-state", user.uid));
+          const collect = collection(firestore, "subscription-state");
+          const query = await getDoc(doc(collect, user.uid));
           if (query.exists()) {
             console.log(query.data());
             setSubscriptionData(query.data() as SubscriptionDataInterface);

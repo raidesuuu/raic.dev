@@ -5,6 +5,7 @@ import "@/styles.scss";
 import { Suspense } from "react";
 import Header from "@components/Header";
 import Footer from "@components/Footer";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,11 +16,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="description" content="雷のサイトへようこそ！" />
       </head>
       <body>
-        <div id="root" className="flex flex-col min-h-screen bg-gray-950 text-white">
-          <Header />
-          <Suspense fallback={<LoadingScreen />}>{children}</Suspense>
-          <Footer />
-        </div>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <div id="root" className="flex flex-col min-h-screen">
+            <Header />
+            <Suspense fallback={<LoadingScreen />}>
+              <main>{children}</main>
+            </Suspense>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

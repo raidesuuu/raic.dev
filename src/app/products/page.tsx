@@ -1,10 +1,10 @@
-import React from 'react';
-import * as ProductsComponent from '@components/Products';
+import React from "react";
+import * as ProductsComponent from "@components/Products";
 
 const Products: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-8">
-        <ProductsComponent.default />
+    <div className="min-h-screen mt-16 p-8">
+      <ProductsComponent.default />
     </div>
   );
 };

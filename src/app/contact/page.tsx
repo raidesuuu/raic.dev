@@ -1,10 +1,10 @@
-import React from 'react';
-import * as ContactComponent from '@components/Contact';
+import React from "react";
+import * as ContactComponent from "@components/Contact";
 
 const Contacts: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-8">
-        <ContactComponent.default />
+    <div className="min-h-screen mt-16 p-8">
+      <ContactComponent.default />
     </div>
   );
 };

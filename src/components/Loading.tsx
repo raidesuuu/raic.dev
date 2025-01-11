@@ -2,7 +2,7 @@ import React from "react";
 
 const Contact: React.FC = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-950 text-white">
+    <div className="flex items-center justify-center min-h-screen ">
       <div className="flex flex-col items-center">
         <div className="loader"></div> {/* スピナー */}
         <p className="mt-4 text-lg">ロード中...</p>

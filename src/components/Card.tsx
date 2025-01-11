@@ -1,30 +1,34 @@
-import React from 'react';
+import React, { ReactNode } from "react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { Button } from "./ui/button";
+import Link from "next/link";
+import { Badge } from "./ui/badge";
 
 interface HeroProps {
-    title: string;
-    subtitle: string;
-    badge?: string;
-    href?: string;
+  title: string;
+  subtitle: string;
+  from: string;
+  badge?: ReactNode;
+  href?: string;
 }
 
-const Hero: React.FC<HeroProps> = ({
-    title,
-    subtitle,
-    badge,
-    href
-}) => {
-    return (
-        <div className="max-w-sm w-72 bg-gradient-to-r from-blue-900 to-purple-900 text-white rounded overflow-hidden shadow-lg">
-            <a href={href} className="newtab">
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">{title} {badge ? <span className="text-xs font-medium me-2 px-2.5 py-0.5 rounded bg-blue-900 text-blue-300">{badge}</span> : ""}                    </div>
-                    <p className="text-base">
-                        {subtitle}
-                    </p>
-                </div>
-            </a>
-        </div>
-    );
-}
+const Hero: React.FC<HeroProps> = ({ title, subtitle, from, badge, href = "#" }) => {
+  return (
+    <Card className="w-[350px] ">
+      <CardHeader>
+        <CardTitle>{title} {badge ? (<Badge className="ml-3">{badge}</Badge>) : (<Badge className="ml-3">製品</Badge>) }</CardTitle>
+        <CardDescription>{subtitle}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>製品の登場日: {from}</p>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <Button asChild>
+            <Link href={href} target="_blank">サイトにアクセス</Link>
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};
 
 export default Hero;

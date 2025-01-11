@@ -1,6 +1,8 @@
 "use client";
 
 import LoadingScreen from "@/components/Loading";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import React, { lazy, Suspense, useEffect } from "react";
 import { FaArrowDown, FaGithub } from "react-icons/fa";
 
@@ -23,7 +25,7 @@ const App: React.FC = () => {
 
   return (
     <Suspense fallback={<LoadingScreen />}>
-      <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-between text-center text-white">
+      <div className="min-h-screen flex flex-col items-center justify-between text-center">
         <main className="flex-grow flex h-screen flex-col items-center justify-center w-full">
           <h1 className="text-6xl font-bold mb-4 bold-h1">雷のサイト</h1>
           <p className="text-xl mb-8 max-w-xl">
@@ -32,12 +34,14 @@ const App: React.FC = () => {
           </p>
 
           <div className="flex space-x-4">
-            <button className="button primary flex items-center" onClick={scrollClick}>
-              スクロール <FaArrowDown className="text-white bounce ml-2" />
-            </button>
-            <a href="https://github.com/raidesuuu" className="button newtab secondary flex items-center space-x-2">
-              <FaGithub /> <span>GitHub</span>
-            </a>
+            <Button className="pt-6 pb-6" onClick={scrollClick}>
+              スクロール <FaArrowDown className="bounce ml-2" />
+            </Button>
+            <Button asChild className="p-4 pt-6 pb-6" variant={"secondary"}>
+              <Link href="https://github.com/raidesuuu">
+                <FaGithub /> <span>GitHub</span>
+              </Link>
+            </Button>
           </div>
         </main>
 

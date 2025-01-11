@@ -3,7 +3,7 @@ import React from "react";
 
 const PatchNote: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-8">
+    <div className="min-h-screen mt-16 p-8">
       <h1 className="text-4xl font-bold mb-4">パッチノート</h1>
       <p className="mb-6 text-lg leading-relaxed">パッチノートは、雷のサイトの更新履歴を記録しています。</p>
       <h3 className="text-2xl font-bold mb-4">バージョン 1.1</h3>

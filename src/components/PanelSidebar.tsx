@@ -1,20 +1,85 @@
 import React from "react";
 
+import { Home, User } from "lucide-react";
+import { MdSubscriptions } from "react-icons/md";
+import { IoMdDocument } from "react-icons/io";
+
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import { FaShield } from "react-icons/fa6";
+import { FaExternalLinkAlt } from "react-icons/fa";
+
 const PanelSidebar: React.FC = () => {
+  // Menu items.
+  const items = [
+    {
+      title: "ホーム",
+      url: "/account/panel/",
+      icon: Home,
+    },
+    {
+      title: "セキュリティ",
+      url: "/account/panel/security",
+      icon: FaShield,
+    },
+    {
+      title: "サブスクリプション",
+      url: "/account/panel/subscriptions",
+      icon: MdSubscriptions,
+    },
+    {
+      title: "API",
+      url: "/account/panel/credentials",
+      icon: User,
+    },
+  ];
+
+  const topItems = [
+    {
+      title: "API Docs",
+      url: "https://docs.raic.dev",
+      icon: IoMdDocument,
+    },
+  ];
+
   return (
-    <aside className="w-full lg:w-80 bg-gray-800 mb-5 lg:mb-0 lg:mr-5 text-white p-6 flex flex-col">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold">メニュー</h2>
-      </div>
-      <nav className="flex flex-col space-y-4">
-        <a href="/account/panel" className="text-lg hover:bg-gray-700 rounded py-2 px-4">
-          ホーム
-        </a>
-        <a href="/account/panel/subscriptions" className="text-lg hover:bg-gray-700 rounded py-2 px-4">
-          サブスクリプション
-        </a>
-      </nav>
-    </aside>
+    <Sidebar className="mt-16">
+      <SidebarContent>
+      <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {topItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url} target="_blank">
+                      <item.icon />
+                      <span>{item.title}</span>
+                      <FaExternalLinkAlt className="ml-auto" />
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>パネル</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
   );
 };
 

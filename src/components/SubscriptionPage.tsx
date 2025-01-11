@@ -2,6 +2,13 @@ import React, { useEffect, useRef } from "react";
 import { useSubscriptionData } from "@/util/useSubscriptionData";
 import { SubscriptionDataInterface } from "@/util/firebaseConfig";
 import Loading from "@/app/loading";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { FaMoneyBill } from "react-icons/fa";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select";
+import { Button } from "./ui/button";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Label } from "./ui/label";
+import { Badge } from "./ui/badge";
 
 const SubscriptionDetails: React.FC<{ data: SubscriptionDataInterface; formRef: React.RefObject<HTMLFormElement> }> = ({ data, formRef }) => {
   const getPlanName = (plan: string) => {
@@ -29,14 +36,15 @@ const SubscriptionDetails: React.FC<{ data: SubscriptionDataInterface; formRef: 
   }, []);
 
   return (
-    <div className="p-4 mb-4 text-base mt-6 rounded-lg bg-gray-900 text-green-400" role="alert">
-      <p className="text-xl lg:text-2xl">{planName}はアクティブです</p>
-      <p>
+    <Alert>
+      <FaMoneyBill className="h-5 w-5" />
+      <AlertTitle className="text-lg text-green-400">{planName}はアクティブです</AlertTitle>
+      <AlertDescription>
         Stripeでの購入が完了したか、あなたの特典申請リクエストは承認されました。
         <br />
         {planName}をご購入いただき、ありがとうございます。
-      </p>
-    </div>
+      </AlertDescription>
+    </Alert>
   );
 };
 
@@ -56,7 +64,7 @@ const SubscriptionPage: React.FC = () => {
       <p className="text-lg lg:text-xl mb-8 max-w-5xl">プレミアムの購入とサブスクリプションの管理</p>
 
       <h2 className="text-2xl lg:text-3xl font-bold mb-5">プレミアムを購入する</h2>
-      <p className="text-base lg:text-lg mb-8 max-w-5xl">
+      <p className="mb-8 max-w-5xl">
         GitHub SponsorsまたはStripeで、プレミアム以上のランクを購入してください。
         <br />
         サブスクリプション(ランク)についての詳細は
@@ -76,39 +84,49 @@ const SubscriptionPage: React.FC = () => {
       <form ref={formRef} className="mb-3" method="post" action="http://api.raic.dev/stripe/create-checkout-session">
         <h2 className="text-2xl lg:text-3xl font-bold mb-5">Stripeで購入する</h2>
 
-        <h3 className="text-xl lg:text-2xl mb-3 font-bold">期間を選択</h3>
-        <div className="mb-4">
-          <input aria-label="月間" type="radio" defaultChecked id="selectPlan_monthly" name="selectPeriod" value="monthly" />
-          <label htmlFor="selectPlan_monthly" className="ml-2">
-            一か月
-          </label>
-          <input aria-label="年間" type="radio" id="selectPlan_yearly" name="selectPeriod" value="yearly" className="ml-4" />
-          <label htmlFor="selectPlan_yearly" className="ml-2">
-            一年
-            <span className="ml-3 text-xs font-medium px-2.5 py-0.5 rounded bg-yellow-900 text-yellow-300">割引あり</span>
-          </label>
-        </div>
+        <p className="mb-3 max-w-5xl">サブスクリプションを購入して、即座に特典を使用します。</p>
 
-        <h3 className="text-xl lg:text-2xl mb-3 font-bold">プランを選択</h3>
+        <h3 className="text-lg lg:text-2xl mb-3 font-bold">期間を選択</h3>
+        <RadioGroup className="flex" name="selectPeriod" defaultValue="monthly">
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="monthly" id="r1" />
+            <Label htmlFor="r1">一か月</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="yearly" id="r2" />
+            <Label htmlFor="r2">一年 <Badge className="ml-2">割引あり</Badge></Label>
+          </div>
+        </RadioGroup>
 
-        <p className="text-base lg:text-lg mb-3 max-w-5xl">「50OFFSTRIPE」を使うと50%オフでプレミアムプラスとProを入手できます！</p>
+        <h3 className="text-lg lg:text-2xl mb-3 mt-3 font-bold">プランを選択</h3>
+
+        <p className="mb-3 max-w-5xl">「50OFFSTRIPE」を使うと50%オフでプレミアムプラスとProを入手できます！</p>
 
         <input type="hidden" name="FB_AUTH_TOKEN" value={authToken || ""} />
 
-        <select aria-label="プラン選択" name="selectPlan" className="border mb-3 text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
-          <option value="premium">プレミアム</option>
-          <option value="premiumPlus">プレミアムプラス</option>
-          <option value="pro">Pro</option>
-        </select>
+        <Select defaultValue="premium" aria-label="プラン選択" name="selectPlan">
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="プランを選択" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>プラン</SelectLabel>
+              <SelectItem value="premium">プレミアム</SelectItem>
+              <SelectItem value="premiumPlus">プレミアムプラス</SelectItem>
+              <SelectItem value="pro">Pro</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
 
-        <input className="button primary is-primary w-full lg:w-auto" type="submit" value="購入" />
+        <Button className="mt-5" type="submit">
+          購入する
+        </Button>
       </form>
 
-      {subscriptionData && <SubscriptionDetails data={subscriptionData} formRef={formRef} />}
+      {subscriptionData && <SubscriptionDetails data={subscriptionData} formRef={formRef as React.RefObject<HTMLFormElement>} />}
     </div>
   );
 };
-
 export default function SubscriptionPageWithSuspense() {
   return <SubscriptionPage />;
 }
