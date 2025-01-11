@@ -3,7 +3,7 @@
 
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { auth } from "@util/firebaseConfig";
-import { EmailAuthProvider, getMultiFactorResolver, TotpMultiFactorGenerator, reauthenticateWithCredential, verifyBeforeUpdateEmail, onAuthStateChanged, multiFactor, TotpSecret } from "firebase/auth";
+import { EmailAuthProvider, getMultiFactorResolver, TotpMultiFactorGenerator, reauthenticateWithCredential, verifyBeforeUpdateEmail, onAuthStateChanged, multiFactor } from "firebase/auth";
 import PanelSidebar from "@/components/PanelSidebar";
 import LoadingScreen from "@/components/Loading";
 import { SidebarProvider } from "@/components/ui/sidebar";
